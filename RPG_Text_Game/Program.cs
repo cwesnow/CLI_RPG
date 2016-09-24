@@ -19,9 +19,9 @@ namespace RPG_Text_Game
             {
                 textColor(ConsoleColor.Cyan);
                 room(roomX); // Update Room Name, Description, Items, People, Monsters seen
-                textColor(ConsoleColor.DarkRed);
+                textColor(ConsoleColor.DarkGreen);
                 Console.WriteLine("Command: "); // User Prompt asking for input
-                textColor(ConsoleColor.DarkYellow);
+                textColor(ConsoleColor.DarkCyan);
                 tryCommand( Console.ReadLine() ); // Validate and do as commanded
             }
             while (running) ; // End Main Game Loop
@@ -245,14 +245,11 @@ namespace RPG_Text_Game
 
             foreach (string item in inventory)
             {
-                if (item == inventory.LastOrDefault<string>())
+                if (item != inventory.LastOrDefault<string>())
                 {
-                    Console.WriteLine(item);
+                    Console.Write("{0}, ", item);
                 }
-                else
-                {
-                    Console.Write(item + ", ");
-                }
+                else { Console.WriteLine("{0}.", item); }
             }
 
         }
