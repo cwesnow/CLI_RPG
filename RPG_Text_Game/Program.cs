@@ -10,21 +10,53 @@ namespace RPG_Text_Game
     {
         static bool running = true;
         static int roomX = 10101;
-        static Hero hero = new Hero();
+        static Player player = new Player();
+        static Room room = new Room();
 
         static void Main(string[] Args)
         {
             // Main Game Loop
             do
             {
+                room.update(roomX); // Grab current Room Information
+                
                 textColor(ConsoleColor.Cyan);
-                room(roomX); // Update Room Name, Description, Items, People, Monsters seen
+                Console.WriteLine(room.title);
+                
+                textColor(ConsoleColor.DarkCyan);
+                Console.WriteLine(room.view);
 
-                textColor(ConsoleColor.DarkGreen);
+                Console.Write("Also found: ");
+                foreach (var item in room.items)
+                {
+                    if (item == room.items.LastOrDefault<string>())
+                    {
+                        Console.WriteLine(item);
+                    }
+                    else
+                    {
+                        Console.Write("{0},", item);
+                    }
+                }
+
+                Console.Write("Exits: ");
+                foreach (var exit in room.exits)
+                {
+                    if(exit == room.exits.LastOrDefault<string>())
+                    {
+                        Console.WriteLine(exit);
+                    }
+                    else
+                    {
+                        Console.Write("{0},", exit);
+                    }
+                }
+
+                textColor(ConsoleColor.DarkGray);
                 Console.WriteLine("Command: "); // User Prompt asking for input
                 
                 textColor(ConsoleColor.DarkCyan);
-                tryCommand( Console.ReadLine() ); // Validate and do as commanded
+                tryCommand(Console.ReadLine()); // Validate and do as commanded
             }
             while (running) ; // End Main Game Loop
 
@@ -108,7 +140,7 @@ namespace RPG_Text_Game
 
             if (s.ToUpper() == "LOOK")
             {
-                room(roomX);
+                Console.WriteLine(room.title);
             }
 
             // if string is too small, will cause errors with substring
@@ -117,10 +149,12 @@ namespace RPG_Text_Game
                 // This is for targeting a specific Monster or NPC, else randomly attacks a Monster if present
                 if (s.Length > 7)
                 {
+                    // TODO Target NPC/Monster and start combat mode
                     Console.WriteLine("I swing wildly at {0}", s.Substring(7));
                 }
                 else
                 {
+                    // TODO: Code for auto-attack or normal combat behavior
                     Console.WriteLine("Attacking without a target.");
                 }
             }
@@ -128,116 +162,22 @@ namespace RPG_Text_Game
             // For Testing Purposes
             if (s.ToUpper() == "LEVELUP")
             {
-                hero.levelUp();
+                player.levelUp();
             }
 
             if (s.ToUpper() == "STATUS")
             {
-                hero.status();
+                player.status();
             }
 
             if (s.ToUpper() == "EQUIPMENT")
             {
-                hero.equipment();
+                player.equipment();
             }
 
             if (s.ToUpper() == "EXIT" || s.ToUpper() == "QUIT")
                 running = false;
         }
-
-        static void room(int x)
-        {
-            switch (x)
-            {
-                case 0:
-                    Console.WriteLine(
-                        "Welcome to Castle Grabber \n\n" +
-                        "It's a land dominated by powerful Kings and Queens, Glorious Battles, and Hidden Danger! \n\n" +
-                        "But your story is just beginning...\n\n"
-                        );
-                    pause();
-                    
-                    roomX = 101010;
-                    break;
-
-                case 10101:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 1\n" +
-                        "Y: 1\n"
-                        );
-                    break;
-
-                case 10201:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 2\n" +
-                        "Y: 1\n"
-                        );
-                    break;
-
-                case 10301:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 3\n" +
-                        "Y: 1\n"
-                        );
-                    break;
-
-                case 10102:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 1\n" +
-                        "Y: 2\n"
-                        );
-                    break;
-
-                case 10103:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 1\n" +
-                        "Y: 3\n"
-                        );
-                    break;
-
-                case 10202:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 2\n" +
-                        "Y: 2\n"
-                        );
-                    break;
-                
-                case 10203:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 2\n" +
-                        "Y: 3\n"
-                        );
-                    break;
-
-                case 10302:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 3\n" +
-                        "Y: 2\n"
-                        );
-                    break;
-
-                case 10303:
-                    Console.WriteLine(
-                        "Floor 1\n" +
-                        "X: 3\n" +
-                        "Y: 3\n"
-                        );
-                    break;
-
-                default:
-                    Console.WriteLine("Room: {0}", roomX);
-                    break;
-            } // End Switch
-
-        } // End Room Method
 
         static void pause()
         {
@@ -251,57 +191,5 @@ namespace RPG_Text_Game
         }
 
     } // End Program Class
-
-    class Hero
-    {
-        public int level {get; set;}
-        public int health { get; set; }
-        public int attack { get; set; }
-        public int defense { get; set; }
-        public int speed { get; set; }
-        List<string> inventory = new List<string>();
-
-        public void levelUp()
-        {
-            level += 1;
-            health = 20 + (level/10 * 10);
-            attack = 2 + (level/3);
-            defense = 2 + (level/4);
-            speed = 2 + (level/5);
-            Console.WriteLine("You are now level {0}!", level);
-        }
-
-        public void status()
-        {
-            Console.WriteLine(
-                    "Level: {0}\n" +
-                    "Health: {1}\n" +
-                    "Attack: {2}\n" +
-                    "Defense: {3}\n" +
-                    "Speed: {4}\n"
-                    , level, health, attack, defense, speed
-                    );
-        }
-
-        public void equipment()
-        {
-            inventory.Add("Sword");
-            inventory.Add("Shield");
-            inventory.Add("Leather");
-
-            Console.Write("\nInventory: ");
-
-            foreach (string item in inventory)
-            {
-                if (item != inventory.LastOrDefault<string>())
-                {
-                    Console.Write("{0}, ", item);
-                }
-                else { Console.WriteLine("{0}.", item); }
-            }
-
-        }
-
-    } // End Hero
 
 } // End NameSpace
