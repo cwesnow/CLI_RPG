@@ -9,7 +9,7 @@ namespace RPG_Text_Game
     class Program
     {
         static bool running = true;
-        static int roomX = 0;
+        static int roomX = 10101;
         static Hero hero = new Hero();
 
         static void Main(string[] Args)
@@ -19,8 +19,10 @@ namespace RPG_Text_Game
             {
                 textColor(ConsoleColor.Cyan);
                 room(roomX); // Update Room Name, Description, Items, People, Monsters seen
+
                 textColor(ConsoleColor.DarkGreen);
                 Console.WriteLine("Command: "); // User Prompt asking for input
+                
                 textColor(ConsoleColor.DarkCyan);
                 tryCommand( Console.ReadLine() ); // Validate and do as commanded
             }
@@ -30,13 +32,14 @@ namespace RPG_Text_Game
 
         static void tryCommand(string s)
         {
+            textColor(ConsoleColor.DarkGreen);
             // Shortcut Commands
             if (s.Length < 3)
             {
                 if (s.ToUpper() == "N") s = "NORTH";
                 if (s.ToUpper() == "S") s = "SOUTH";
                 if (s.ToUpper() == "E") s = "EAST";
-                if (s.ToUpper() == "W") s = "West";
+                if (s.ToUpper() == "W") s = "WEST";
                 if (s.ToUpper() == "NE") s = "NORTHEAST";
                 if (s.ToUpper() == "NW") s = "NORTHWEST";
                 if (s.ToUpper() == "SE") s = "SOUTHEAST";
@@ -45,51 +48,61 @@ namespace RPG_Text_Game
 
             if (s.ToUpper() == "NORTH")
             {
+                roomX += 1;
                 Console.WriteLine("Moving North . . . ");
             }
 
             if (s.ToUpper() == "SOUTH")
             {
+                roomX += -1;
                 Console.WriteLine("Moving South . . . ");
             }
 
             if (s.ToUpper() == "EAST")
             {
+                roomX += 100;
                 Console.WriteLine("Moving East . . . ");
             }
 
             if (s.ToUpper() == "WEST")
             {
+                roomX += -100;
                 Console.WriteLine("Moving West . . . ");
             }
 
             if (s.ToUpper() == "NORTHEAST")
             {
+                roomX += 101;
                 Console.WriteLine("Moving Northeast . . . ");
             }
 
             if (s.ToUpper() == "SOUTHEAST")
             {
+                roomX += 99;
                 Console.WriteLine("Moving Southeast . . . ");
             }
 
             if (s.ToUpper() == "NORTHWEST")
             {
+                roomX += -99;
                 Console.WriteLine("Moving Northwest . . . ");
             }
 
             if (s.ToUpper() == "SOUTHWEST")
             {
+                roomX += -101;
                 Console.WriteLine("Moving Southwest . . . ");
             }
 
             if (s.ToUpper() == "UP")
             {
+                roomX += 10000;
                 Console.WriteLine("Moving Up . . . ");
             }
 
             if (s.ToUpper() == "DOWN")
             {
+                roomX += -10000;
                 Console.WriteLine("Moving Down . . . ");
             }
 
@@ -144,48 +157,83 @@ namespace RPG_Text_Game
                         );
                     pause();
                     
-                    Console.WriteLine(
-                    "You wake up to the screams and cries of the village under attack. \n" +
-                    "Your parents knew this day would come, and force you into a secret tunnel. \n"
-                    );
-                    pause();
+                    roomX = 101010;
+                    break;
 
+                case 10101:
                     Console.WriteLine(
-                        "The dark tunnels slowly led you away from the the terror and chaos. \n" +
-                        "It seemed like you had crawled for hours, but soon a new room revealed itself. \n "
+                        "Floor 1\n" +
+                        "X: 1\n" +
+                        "Y: 1\n"
                         );
-                    pause();
+                    break;
 
+                case 10201:
                     Console.WriteLine(
-                        "It's a large bedroom with a large bookshelf of books \n" +
-                        "The bed is made out of real oak, with ornate patterns. \n" +
-                        "and there's an envelope on the desk... \n"
+                        "Floor 1\n" +
+                        "X: 2\n" +
+                        "Y: 1\n"
                         );
-                    pause();
+                    break;
 
+                case 10301:
                     Console.WriteLine(
-                        "The letter explains who you really are! \n\n" +
-                        "My child, \n" +
-                        "  You were hidden away from an evil King. \n" +
-                        "His madness grows as he seeks to destroy you. \n" +
-                        "He fears you and the prophecy of his downfall...\n"
+                        "Floor 1\n" +
+                        "X: 3\n" +
+                        "Y: 1\n"
                         );
-                    roomX = 1;
                     break;
 
-                case 1:
+                case 10102:
+                    Console.WriteLine(
+                        "Floor 1\n" +
+                        "X: 1\n" +
+                        "Y: 2\n"
+                        );
                     break;
 
-                case 2:
+                case 10103:
+                    Console.WriteLine(
+                        "Floor 1\n" +
+                        "X: 1\n" +
+                        "Y: 3\n"
+                        );
                     break;
 
-                case 3:
+                case 10202:
+                    Console.WriteLine(
+                        "Floor 1\n" +
+                        "X: 2\n" +
+                        "Y: 2\n"
+                        );
+                    break;
+                
+                case 10203:
+                    Console.WriteLine(
+                        "Floor 1\n" +
+                        "X: 2\n" +
+                        "Y: 3\n"
+                        );
                     break;
 
-                case 4:
+                case 10302:
+                    Console.WriteLine(
+                        "Floor 1\n" +
+                        "X: 3\n" +
+                        "Y: 2\n"
+                        );
+                    break;
+
+                case 10303:
+                    Console.WriteLine(
+                        "Floor 1\n" +
+                        "X: 3\n" +
+                        "Y: 3\n"
+                        );
                     break;
 
                 default:
+                    Console.WriteLine("Room: {0}", roomX);
                     break;
             } // End Switch
 
