@@ -12,19 +12,22 @@ namespace RPG_Text_Game
         static int roomX = 10101;
         static Player player = new Player();
         static Room room = new Room();
-
+        
         static void Main(string[] Args)
         {
+            // Setup Console Window
+            initialConfig();
+
             // Main Game Loop
             do
             {
                 room.update(roomX); // Grab current Room Information
                 
                 textColor(ConsoleColor.Cyan);
-                Console.WriteLine(room.title);
+                Console.WriteLine("\n{0}", room.title);
                 
                 textColor(ConsoleColor.DarkCyan);
-                Console.WriteLine(room.view);
+                Console.WriteLine("\n{0}",room.view);
 
                 Console.Write("Also found: ");
                 foreach (var item in room.items)
@@ -53,10 +56,10 @@ namespace RPG_Text_Game
                 }
 
                 textColor(ConsoleColor.DarkGray);
-                Console.WriteLine("Command: "); // User Prompt asking for input
+                Console.Write("Command: "); // User Prompt
                 
                 textColor(ConsoleColor.DarkCyan);
-                tryCommand(Console.ReadLine()); // Validate and do as commanded
+                tryCommand(Console.ReadLine()); // Validate Input
             }
             while (running) ; // End Main Game Loop
 
@@ -64,6 +67,7 @@ namespace RPG_Text_Game
 
         static void tryCommand(string s)
         {
+            Console.WriteLine();
             textColor(ConsoleColor.DarkGreen);
             // Shortcut Commands
             if (s.Length < 3)
@@ -78,52 +82,107 @@ namespace RPG_Text_Game
                 if (s.ToUpper() == "SW") s = "SOUTHWEST";
             }
 
-            if (s.ToUpper() == "NORTH")
-            {
-                roomX += 1;
-                Console.WriteLine("Moving North . . . ");
+            if (s.ToUpper() == "NORTH"){
+                if (room.exits.Contains("North") )
+                {
+                    roomX += 1;
+                    Console.WriteLine("Moving North . . . ");
+                }
+                else
+                {
+                    Console.WriteLine("You can't go North.");
+                }
             }
 
             if (s.ToUpper() == "SOUTH")
             {
-                roomX += -1;
-                Console.WriteLine("Moving South . . . ");
+                if(room.exits.Contains("South"))
+                {
+                    roomX += -1;
+                    Console.WriteLine("Moving South . . . ");
+                }
+                else
+                {
+                    Console.WriteLine("You can't go South.");
+                }
             }
 
             if (s.ToUpper() == "EAST")
             {
-                roomX += 100;
-                Console.WriteLine("Moving East . . . ");
+                if (room.exits.Contains("East"))
+                {
+                    roomX += 100;
+                    Console.WriteLine("Moving East . . . ");
+                }
+                else
+                {
+                    Console.WriteLine("You can't go East.");
+                }
             }
-
+   
             if (s.ToUpper() == "WEST")
             {
-                roomX += -100;
-                Console.WriteLine("Moving West . . . ");
+                if(room.exits.Contains("West") )
+                {
+                    roomX += -100;
+                    Console.WriteLine("Moving West . . . ");
+                }
+                else
+                {
+                    Console.WriteLine("You can't go West.");
+                }
             }
 
             if (s.ToUpper() == "NORTHEAST")
             {
-                roomX += 101;
-                Console.WriteLine("Moving Northeast . . . ");
+                if(room.exits.Contains("Northeast") )
+                {
+                    roomX += 101;
+                    Console.WriteLine("Moving Northeast . . . ");
+                }
+                else
+                {
+                    Console.WriteLine("You can't go Northeast.");
+                }
             }
 
             if (s.ToUpper() == "SOUTHEAST")
             {
-                roomX += 99;
-                Console.WriteLine("Moving Southeast . . . ");
+                if(room.exits.Contains("Southeast") )
+                {
+                    roomX += 99;
+                    Console.WriteLine("Moving Southeast . . . ");
+                }
+                else
+                {
+                    Console.WriteLine("You can't go Southeast.");
+                }
             }
 
             if (s.ToUpper() == "NORTHWEST")
             {
-                roomX += -99;
-                Console.WriteLine("Moving Northwest . . . ");
+                if (room.exits.Contains("Northwest"))
+                {
+                    roomX += -99;
+                    Console.WriteLine("Moving Northwest . . . ");
+                }
+                else
+                {
+                    Console.WriteLine("You can't go Northwest.");
+                }
             }
 
             if (s.ToUpper() == "SOUTHWEST")
             {
-                roomX += -101;
-                Console.WriteLine("Moving Southwest . . . ");
+                if (room.exits.Contains("Southwest"))
+                {
+                    roomX += -101;
+                    Console.WriteLine("Moving Southwest . . . ");
+                }
+                else
+                {
+                    Console.WriteLine("You can't go Southwest");
+                }
             }
 
             if (s.ToUpper() == "UP")
@@ -190,6 +249,17 @@ namespace RPG_Text_Game
             Console.ForegroundColor = color;
         }
 
+        static void initialConfig()
+        {
+            // Initial Configuration
+            Console.Title = "Castle Grabber";
+            Console.WindowWidth = Console.LargestWindowWidth / 3 * 2;
+            Console.WindowHeight = Console.LargestWindowHeight / 3 * 2;
+            Console.SetWindowPosition(0, 0);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+
+        }
     } // End Program Class
 
 } // End NameSpace
