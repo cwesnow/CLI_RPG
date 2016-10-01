@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace RPG_Text_Game
 {
@@ -11,14 +12,14 @@ namespace RPG_Text_Game
         static Player player = new Player();
         static Room room = new Room();
 
+
         static void Main(string[] Args)
         {
-
             // Setup Console Window
             initialConfig();
-            
+
             topMenu();
-            
+
             // Starting Location - Load Room, Show Room
             room.update(roomX);
             room.show(verbose);
@@ -52,7 +53,6 @@ namespace RPG_Text_Game
                 if (s.ToUpper() == "D") s = "DOWN";
                 if (s.ToUpper() == "U") s = "UP";
                 if (s.ToUpper() == "A") s = "ATTACK";
-                if (s.ToUpper() == "AA") s = "BASH";
                 if (s.ToUpper() == "?") s = "HELP";
                 if (s.ToUpper() == "I") s = "INVENTORY";
             }
@@ -78,6 +78,20 @@ namespace RPG_Text_Game
             if (s.ToUpper() == "LOOK")
             {
                 room.show(true);
+            }
+
+            if (s.Length > 5 && s.Substring(0, 4).ToUpper() == "LOOK")
+            {
+                string target = s.Substring(5);
+
+                foreach (var item in room.npc)
+                {
+                    if (item.name.ToUpper() == target.ToUpper())
+                    {
+                        Console.WriteLine(item.description);
+                    }
+                }
+                
             }
 
             // if string is too small, will cause errors with substring
@@ -150,7 +164,7 @@ namespace RPG_Text_Game
                 " C A S T L E  G R A B B E R \n\n" +
                 "[E] . Enter realm of Myrgia \n" +
                 "[X] . Exit Game\n");
-            
+
             while (true)
             {
                 input = Console.ReadLine();
@@ -185,13 +199,13 @@ namespace RPG_Text_Game
                     player.intelligence += 5;
                     player.charm += 5;
                     break;
-                
+
                 case 2:
                     player.race = "Elf";
                     player.agility += 5;
                     player.wisdom += 5;
                     break;
-                
+
                 case 3:
                     player.race = "Dwarf";
                     player.strength += 5;
@@ -238,9 +252,9 @@ namespace RPG_Text_Game
                     player.stamina += 5;
                     break;
             }
-            
+
         }
-        
+
         static void roomChanged()
         {
             room.update(roomX);

@@ -8,7 +8,7 @@ namespace RPG_Text_Game
     {
         public string title { get; set; }
         public string view { get; set; }
-        public List<string> npc = new List<string>();
+        public List<NPC> npc = new List<NPC>();
         public List<string> monsters = new List<string>();
         public List<string> items = new List<string>();
         public List<string> exits = new List<string>();
@@ -50,14 +50,14 @@ namespace RPG_Text_Game
                 Console.ForegroundColor = ConsoleColor.Gray;
                 foreach (var item in npc)
                 {
-                    if (item == npc.LastOrDefault<string>())
+                    if (item == npc.LastOrDefault<NPC>())
                     {
-                        Console.Write("{0}", item);
+                        Console.Write("{0}", item.name);
                         writeColor(ConsoleColor.Magenta, ".\n");
                     }
                     else
                     {
-                        Console.Write("{0}, ", item);
+                        Console.Write("{0}, ", item.name);
                     }
                 }
             }
@@ -112,7 +112,7 @@ namespace RPG_Text_Game
                 case 0100110:
                     title = "Rockville NW Tower";
                     view = "This tower provides an excellent view for miles.";
-                    npc.Add("Guard");
+                    npc.Add( new NPC("Guard", "This seasoned soldier looks like he could kill somebody without thinking about it"));
                     exits.Add("southeast");
                     break;
 
@@ -125,7 +125,7 @@ namespace RPG_Text_Game
                 case 0101010:
                     title = "Rockville NE Tower";
                     view = "This tower provides an excellent view for miles.";
-                    npc.Add("Guard");
+                    npc.Add( new NPC("Guard","This seasoned soldier looks like he could kill somebody without thinking about it"));
                     exits.Add("southwest");
                     break;
 
@@ -207,14 +207,14 @@ namespace RPG_Text_Game
                 case 0100308:
                     title = "Mayor's House, Back Room";
                     view = "This lavish room has been decorated with all manner of finery.";
-                    npc.Add("Mayor");
+                    npc.Add( new NPC("Mayor","His broad and stern face shows a man that's spent many years in thought."));
                     exits.Add("south");
                     break;
 
                 case 0100408:
                     title = "Sweet Pete's Gambling House";
                     view = "This small room is packed with an assortment of games.";
-                    npc.Add("Gambling Man");
+                    npc.Add( new NPC("Gambling Man","A slick looking city boy that seems totally in control here."));
                     items.Add("Cards");
                     exits.Add("east");
                     break;
@@ -230,21 +230,21 @@ namespace RPG_Text_Game
                 case 0100608:
                     title = "Treexi's Spell Shop - Harmful Stuff";
                     view = "This room is covered in Scrolls and Books.";
-                    npc.Add("Treexi");
+                    npc.Add( new NPC("Treexi","This crazy woman seems to mutter fireballs and freezing storms while making strange gestures in the mirror."));
                     exits.Add("north");
                     break;
 
                 case 0100708:
                     title = "Warrior Trainer";
                     view = "This room is full of armor and various weapons.";
-                    npc.Add("Master Warrior");
+                    npc.Add( new NPC("Master Warrior","This massive dwarven warrior shifts his armor with ease as his two handed axe rests across his entire back like an after thought."));
                     exits.Add("north");
                     break;
                 
                 case 0100808:
                     title = "Thief Trainer";
                     view = "This room is dimly lit, and you feel like somebody is in the shadows...";
-                    npc.Add("Master Thief");
+                    npc.Add( new NPC("Master Thief","This shadowy figure is concealed with dark clothing, and seems to rather be left alone in the dark."));
                     exits.Add("north");
                     break;
 
@@ -265,6 +265,7 @@ namespace RPG_Text_Game
                 case 0100307:
                     title = "Mayor's House";
                     view = "This is the mayor's public room";
+                    npc.Add( new NPC("Mayor", "His broad and stern face shows a man that's spent many years in thought."));
                     exits.Add("north");
                     exits.Add("south");
                     break;
@@ -275,10 +276,10 @@ namespace RPG_Text_Game
                     items.Add("Favorite Chair");
                     items.Add("Comfy Beds");
                     items.Add("Last nights ToFu");
-                    npc.Add("Mom");
-                    npc.Add("Dad");
-                    npc.Add("Fluffy");
-                    npc.Add("Woofy");
+                    npc.Add( new NPC("Mom","Clothes are always stained, but her smile never stops shining for you."));
+                    npc.Add(new NPC("Dad","Stains, and ripped coverals might make him seem uncool, but he never lets you down."));
+                    npc.Add(new NPC("Fluffy","Her black fur makes it hard to see much detail."));
+                    npc.Add(new NPC("Woofy","His brown short hair and fierce eyes let's you know he'll be loyal to the ends of the earth for you."));
                     exits.Add("south");
                     exits.Add("east");
                     break;
@@ -292,9 +293,9 @@ namespace RPG_Text_Game
                     break;
 
                 case 0100607:
-                    title = "Baerrix's Spell Shop - Helpful Stuff";
+                    title = "Chinthalai's Spell Shop - Helpful Stuff";
                     view = "You see Scrolls, and Books lining every wall and counter space.";
-                    npc.Add("Baerrix");
+                    npc.Add(new NPC("Chinthalai", "Her favorite tune hums innocently as she carries about the shop helping everyone become better."));
                     exits.Add("south");
                     break;
 
@@ -302,14 +303,14 @@ namespace RPG_Text_Game
                     title = "Mage Trainer";
                     view = "Various scrolls and items scatter this room, " +
                         "and there's a faint taste of sulfur in the air.";
-                    npc.Add("Master Mage");
+                    npc.Add( new NPC("Master Mage","His blackened robes shine with strange writings and symbols, and his gnarled staff feels like a viper in waiting... ready to strike."));
                     exits.Add("south");
                     break;
 
                 case 0100807:
                     title = "Priest Trainer";
                     view = "Holy chants fill you with inner peace and resolve.";
-                    npc.Add("Master Priest");
+                    npc.Add( new NPC("Master Priest","The most holy wears robes of the purest whites and speaks in the calmest of whispers."));
                     exits.Add("south");
                     break;
 
@@ -413,14 +414,14 @@ namespace RPG_Text_Game
                 case 0100305:
                     title = "Gurtz Weapons - Sword Shop";
                     view = "You see several swords and daggers on display.";
-                    npc.Add("Gurtz");
+                    npc.Add( new NPC("Gurtz","This slender and quick moving Elf moves almost as if swords are just an extension of his arms."));
                     exits.Add("west");
                     break;
                 
                 case 0100405:
                     title = "Rockville Bank";
                     view = "The bank will keep your money away from thieves and monsters.";
-                    npc.Add("Hueik");
+                    npc.Add( new NPC("Hueik", "This old man is well dressed and speaks with the utmost respect with all his customers."));
                     exits.Add("north");
                     exits.Add("east");
                     break;
@@ -437,7 +438,7 @@ namespace RPG_Text_Game
                 case 0100605:
                     title = "Verksaas Casino";
                     view = "The crowd is mostly gathered around a few tables playing a card game.";
-                    npc.Add("Verksaas");
+                    npc.Add(new NPC("Verksaas","This heavy set man dresses like a regular greasy city politician.  His eyes constantly darting over everyone, as he tries to talk to everyone."));
                     items.Add("Card Table");
                     exits.Add("west");
                     break;
@@ -446,7 +447,7 @@ namespace RPG_Text_Game
                     title = "Myrrucki's Potions";
                     view = "A series of strangely colored and shaped bottles line this shops walls. " +
                         "Along the counter top it says \"It's not if I can afford it, but if I can afford not to have it tomorrow\"";
-                    npc.Add("Myrrucki");
+                    npc.Add(new NPC("Myrrucki", "This wild crazy old man seems to have everything in his shop."));
                     exits.Add("north");
                     exits.Add("south");
                     break;
@@ -456,7 +457,7 @@ namespace RPG_Text_Game
                     view = "Proudly displayed along the walls are a series of different kinds of armor sets. " +
                         "Basic leather wraps and simple tools fill out the lower counters, " +
                         "while the more advanced combat leathers hang up proudly along the walls.";
-                    npc.Add("Kuirog");
+                    npc.Add(new NPC("Kuirog","His smooth skin fits into tight leathers betters than anyone else in town."));
                     exits.Add("east");
                     break;
 
@@ -479,7 +480,7 @@ namespace RPG_Text_Game
                 case 0100304:
                     title = "Origou Weapons - Mace Shop";
                     view = "An assortment of steel hammers and flails list the walls here.";
-                    npc.Add("Origou");
+                    npc.Add( new NPC("Origou","This strong and silent type keeps a massive battle flail at his side while wearing full plate armor all day."));
                     exits.Add("west");
                     break;
 
@@ -487,7 +488,7 @@ namespace RPG_Text_Game
                     title = "Zimmzee's Potions";
                     view = "Oddly colored potions flicker and flash in this shop. " +
                         "The potions here are mostly for children, and pranks.";
-                    npc.Add("Zimmzee");
+                    npc.Add( new NPC("Zimmzee","Her well practiced hands have years of experience, but her favorite part of the day is the little splash of fun."));
                     exits.Add("east");
                     break;
 
@@ -506,7 +507,7 @@ namespace RPG_Text_Game
                     view = "Strange contraptions line up the walls with a strange stick poking out. " +
                         "You see people pulling down the lever and an array of lights and symbols whirling." +
                         "Maybe you should try it out, it seems to be interesting.";
-                    npc.Add("Nuukari");
+                    npc.Add(new NPC("Nuukari","A dark set of leathers fit tightly around her, and you see glimmers of ornate jewelry as she moves.") );
                     items.Add("Slot Machine");
                     exits.Add("west");
                     break;
@@ -514,7 +515,7 @@ namespace RPG_Text_Game
                 case 0100704:
                     title = "Myrrucki's Potions - The Back Room";
                     view = "Long shelves line this room with a wide assortment of colors, shapes, and textures.";
-                    npc.Add("Myrrucki");
+                    npc.Add( new NPC("Myrrucki", "This wild crazy old man seems to have everything in his shop."));
                     exits.Add("north");
                     break;
 
@@ -522,7 +523,7 @@ namespace RPG_Text_Game
                     title = "Kuirog's Armor - ScaleMail Shop";
                     view = "Armor lines the walls with metal chains or beads ornately woven together. " +
                         "It's designed to be lighter than Full Armor, but offer better protection than Leather.";
-                    npc.Add("Kuirog");
+                    npc.Add( new NPC("Kuirog", "A well toned and athletic warrior makes wearing scalemail look like a new trend in town."));
                     exits.Add("east");
                     break;
 
@@ -546,7 +547,7 @@ namespace RPG_Text_Game
                     title = "Phryzee Weapons - Polearms";
                     view = "This shop is full of large heavy weapons " +
                         "designed for maximum power and a range advantage.";
-                    npc.Add("Phryzee");
+                    npc.Add( new NPC("Phryzee","This large warrior hefts his weapons with grace and ease.") );
                     exits.Add("west");
                     break;
 
@@ -554,7 +555,7 @@ namespace RPG_Text_Game
                     title = "Adlymn's Potions";
                     view = "This almost boring display of potions seems popular with adventurers. " +
                     "I wonder what secrets they hold.";
-                    npc.Add("Adlymn");
+                    npc.Add( new NPC("Adlymn","This old man seems worldly, and like he holds many secrets about his craft."));
                     exits.Add("east");
                     break;
 
@@ -578,7 +579,7 @@ namespace RPG_Text_Game
                     title = "Jorik's Armor - Shields";
                     view =
                         "Shields of every kind fill this room, small to large and some extremely large too.";
-                    npc.Add("Jorik");
+                    npc.Add( new NPC("Jorik", "His lean muscles and incredible size makes it easy for him to work on the heaviest of armors."));
                     exits.Add("east");
                     break;
 
@@ -586,9 +587,9 @@ namespace RPG_Text_Game
                     title = "Jorik's Armor - Plate Shop";
                     view = "Heavy duty armor fills this room, and weighs heavily on sturdy stands. " +
                         "It offers complete protection, along with soft lining to soften brutal blows.";
-                    npc.Add("Jorik");
+                    npc.Add( new NPC("Jorik", "His lean muscles and incredible size makes it easy for him to work on the heaviest of armors."));
                     exits.Add("east");
-                    exits.Add("west")
+                    exits.Add("west");
                     break;
 
                 case 0100903:
@@ -666,7 +667,7 @@ namespace RPG_Text_Game
                 case 0100101:
                     title = "Rockville SW Tower";
                     view = "This tower provides an excellent view for miles.";
-                    npc.Add("Guard");
+                    npc.Add( new NPC("Guard", "This seasoned soldier looks like he could kill somebody without thinking about it"));
                     exits.Add("northeast");
                     break;
 
@@ -679,7 +680,7 @@ namespace RPG_Text_Game
                 case 0101001:
                     title = "Rockville SE Tower";
                     view = "This tower provides an excellent view for miles.";
-                    npc.Add("Guard");
+                    npc.Add( new NPC("Guard", "This seasoned soldier looks like he could kill somebody without thinking about it"));
                     exits.Add("northwest");
                     break;
                 
