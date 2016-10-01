@@ -18,7 +18,7 @@ Text-Based Adventure - MUD Clone
  + Equipment
  + Temporary Effects/Spells
  
- Design Items
+ * Design Items
  + Title
  + Description/Helpful Tip
  + Effect/Affects...
