@@ -42,19 +42,20 @@ namespace RPG_Text_Game
             if (s.Length == 0) { room.show(false); }
             if (s.Length < 3)
             {
-                if (s.ToUpper() == "N") s = "NORTH";
-                if (s.ToUpper() == "S") s = "SOUTH";
-                if (s.ToUpper() == "E") s = "EAST";
-                if (s.ToUpper() == "W") s = "WEST";
-                if (s.ToUpper() == "NE") s = "NORTHEAST";
-                if (s.ToUpper() == "NW") s = "NORTHWEST";
-                if (s.ToUpper() == "SE") s = "SOUTHEAST";
-                if (s.ToUpper() == "SW") s = "SOUTHWEST";
-                if (s.ToUpper() == "D") s = "DOWN";
-                if (s.ToUpper() == "U") s = "UP";
-                if (s.ToUpper() == "A") s = "ATTACK";
-                if (s.ToUpper() == "?") s = "HELP";
-                if (s.ToUpper() == "I") s = "INVENTORY";
+                if (s == "N") s = "NORTH";
+                if (s == "S") s = "SOUTH";
+                if (s == "E") s = "EAST";
+                if (s == "W") s = "WEST";
+                if (s == "NE") s = "NORTHEAST";
+                if (s == "NW") s = "NORTHWEST";
+                if (s == "SE") s = "SOUTHEAST";
+                if (s == "SW") s = "SOUTHWEST";
+                if (s == "D") s = "DOWN";
+                if (s == "U") s = "UP";
+                if (s == "A") s = "ATTACK";
+                if (s == "?") s = "HELP";
+                if (s == "I") s = "INVENTORY";
+                if (s == "L") s = "LOOK";
             }
 
             if (room.exits.Contains(s.ToLower()))
@@ -89,24 +90,57 @@ namespace RPG_Text_Game
                     if (item.name.ToUpper() == target.ToUpper())
                     {
                         Console.WriteLine(item.description);
+                        break;
                     }
                 }
-                
+
+                foreach (var item in room.monsters)
+                {
+                    if (item.name.ToUpper() == target.ToUpper())
+                    {
+                        Console.WriteLine(item.description);
+                        break;
+                    }
+                }
+
+                foreach (var item in room.items)
+                {
+                    if (item.name.ToUpper() == target.ToUpper())
+                    {
+                        Console.WriteLine(item.description);
+                        break;
+                    }
+                }
             }
 
             // if string is too small, will cause errors with substring
             if (s.Length > 5 && s.ToUpper().Substring(0, 6) == "ATTACK")
             {
-                // This is for targeting a specific Monster or NPC, else randomly attacks a Monster if present
-                if (s.Length > 7)
+                if (room.monsters != null && room.monsters.Count > 0)
                 {
-                    // TODO Target NPC/Monster and start combat mode
-                    Console.WriteLine("I swing wildly at {0}", s.Substring(7));
+                    if (s.ToUpper() == "ATTACK")
+                    {
+                        writeColor(ConsoleColor.Red, string.Format("You start attacking {0}.\n", room.monsters[0].name));
+                    }
+                    else
+                    if (s.Length > 7 & s.Substring(0,7).ToUpper() == "ATTACK ")
+                    {
+                        string target = s.Substring(7).ToLower();
+                        foreach (var item in room.monsters)
+                        {
+                            if (item.name.ToUpper() == target.ToUpper())
+                            {
+                                Console.WriteLine("You start attacking {0}.", target);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    
                 }
                 else
                 {
-                    // TODO: Code for auto-attack or normal combat behavior
-                    Console.WriteLine("Attacking without a target.");
+                    Console.WriteLine("There isn't anything to attack here.");
                 }
             }
 
